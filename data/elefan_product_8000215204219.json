@@ -1,0 +1,58 @@
+{
+    "code": 8000215204219,
+    "designation": "BOISSON RIZ VITARIZ",
+    "famille": {
+        "id": 34,
+        "code": 4,
+        "code_sfamille": 2,
+        "code_ss_famille": 0,
+        "nom": "LAITS. BOISSONS VEGETALES"
+    },
+    "fournisseur": {
+        "code": 79,
+        "nom": "MOULIN DES MOINES",
+        "addresse1": "101 Rue de Wingersheim",
+        "addresse2": "",
+        "ville": "KRAUTWILLER",
+        "code_postal": "67170",
+        "mt_franco": "390",
+        "tva_intercommunautaire": "",
+        "delai": "0",
+        "remise": "0",
+        "nom_contact": "",
+        "telephone": "",
+        "portable": "",
+        "fax": "",
+        "email": "",
+        "site_internet": ""
+    },
+    "emplacement": {
+        "libelle": "S4"
+    },
+    "rayon": {
+        "libelle": "9L"
+    },
+    "code_tva": 1,
+    "qte_appro": 1,
+    "prix_vente": 1.98,
+    "anc_prix_vente": 1.95,
+    "prix_promo": 0.0,
+    "prix_achat_brut": 1.5,
+    "anc_prix_achat_brut": 1.48,
+    "remise_achat": 0.0,
+    "status": "EN SOMMEIL",
+    "qte_kg_litre": 1,
+    "unite_vente": "Kilogramme",
+    "date_creation": "2018-02-21 00:00:00",
+    "date_modification": "2023-09-21 00:00:00",
+    "taux_tva": 5.5,
+    "prix_vente_ht": 1.876777,
+    "anc_prix_vente_ht": 1.848341,
+    "stocks": {
+        "qte_stocks": 0,
+        "qte_commande": 0,
+        "date": "2023-10-12 22:39:00"
+    },
+    "missing_barcodes": [],
+    "tag_print_requests": []
+}
