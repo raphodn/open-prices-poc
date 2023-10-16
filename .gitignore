@@ -30,3 +30,4 @@ htmlcov
 *.njsproj
 *.sln
 *.sw?
+cache
