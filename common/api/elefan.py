@@ -22,7 +22,14 @@ def find_product_by_code(code: str):
     print("Looking for product with code", code)
 
     product_list = read_json_file()
-    product = next((product for product in product_list if (product["code"] == code or product["code"] == int(code))), None)
+    product = next(
+        (
+            product
+            for product in product_list
+            if (product["code"] == code or product["code"] == int(code))
+        ),
+        None,
+    )
 
     if not product:
         raise ValueError("Product not found")
@@ -35,7 +42,9 @@ def get_products_with_valid_code():
     print("Filtering products with valid code")
 
     product_list = read_json_file()
-    product_list_filtered = list(filter(lambda product: len(str(product["code"])) == 13, product_list))
+    product_list_filtered = list(
+        filter(lambda product: len(str(product["code"])) == 13, product_list)
+    )
 
     # product_list_filtered_categories = [product["famille"]["nom"] for product in product_list_filtered]
     # print(Counter(product_list_filtered_categories))

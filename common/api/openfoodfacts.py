@@ -20,6 +20,7 @@ def get_client():
         environment=Environment.org,
     )
 
+
 def get_product(code):
     client = get_client()
     try:

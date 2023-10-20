@@ -1,6 +1,6 @@
 import sys
-from api import elefan, supabase, openfoodfacts
-from utils import format_elefan_product_for_supabase
+from common.api import elefan, supabase, openfoodfacts
+from common.utils import format_elefan_product_for_supabase
 
 
 code = "8000215204219"
@@ -11,6 +11,7 @@ def send_one_elefan_product_to_supabase_price(product_code):
     elefan_product_formatted = format_elefan_product_for_supabase(elefan_product)
     response = supabase.price_create(elefan_product_formatted)
     print(response)
+
 
 def send_all_elefan_products_to_supabase_price():
     elefan_products = elefan.get_products_with_valid_code()
@@ -23,7 +24,8 @@ def send_all_elefan_products_to_supabase_price():
         if (progress % 50) == 0:
             print(f"{progress}...")
 
-def check_supabase_product_is_in_openfoodfacts(product_code = None):
+
+def check_supabase_product_is_in_openfoodfacts(product_code=None):
     if product_code:
         print(product_code)
         supabase_prices = supabase.price_find_by_product_code(product_code)

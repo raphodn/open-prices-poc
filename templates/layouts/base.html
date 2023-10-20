@@ -1,0 +1,61 @@
+{% load static django_bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %} - Open Prices{% endblock %}</title>
+        {% block meta_description %}
+        <meta name="description" content="Open Prices">
+        {% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" type="image/ico">
+
+        {% bootstrap_css %}
+
+        {% block extra_css %}{% endblock %}
+
+        {% block extra_head %}{% endblock %}
+    </head>
+
+    <body id="top">
+        <noscript></noscript>
+
+        <nav role="navigation" aria-label="Accès rapide" tabindex="1" class="sr-only"></nav>
+
+        {% block header %}
+            {% include "includes/_header.html" %}
+        {% endblock %}
+
+        <main id="main" role="main">
+            {% block breadcrumbs %}{% endblock %}
+
+            {% block messages %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        {% bootstrap_messages %}
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+
+            {% block content %}{% endblock %}
+        </main>
+
+        {% block footer %}
+            {% include "includes/_footer.html" %}
+        {% endblock %}
+
+        {% block modals %}{% endblock %}
+
+        {% block script %}
+        {% bootstrap_javascript %}
+        {% endblock %}
+
+        {% block extra_js %}{% endblock %}
+    </body>
+</html>

@@ -8,6 +8,9 @@ python-dotenv = "*"
 supabase = "*"
 openfoodfacts = "*"
 osmpythontools = "*"
+django = "*"
+django-bootstrap5 = "*"
+django-environ = "*"
 
 [dev-packages]
 
