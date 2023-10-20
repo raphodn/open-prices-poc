@@ -1,5 +1,9 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-<h1>Bienvenue !</h1>
+<div class="container">
+    <h1>Welcome !</h1>
+
+    <a href="{% url 'prices:create' %}" class="btn btn-outline-primary">Add price</a>
+</div>
 {% endblock %}

@@ -1,0 +1,44 @@
+{% extends "layouts/base.html" %}
+{% load static django_bootstrap5 %}
+
+{% block content %}
+<div class="container">
+    <h1>Price: create form</h1>
+
+    <form id="question_create_form" method="POST" action="">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-8">
+                {% bootstrap_field form.product_code %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                {% bootstrap_field form.price %}
+            </div>
+            <div class="col-4">
+                {% bootstrap_field form.currency %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                {% bootstrap_field form.location %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                {% bootstrap_field form.date %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {% bootstrap_button button_type="submit" button_class="btn-primary" content="Create" %}
+                {# {% bootstrap_button button_type="reset" button_class="btn-secondary" content=_("Cancel") %} #}
+                <a class="btn btn-secondary" href="{% url 'pages:home' %}">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
