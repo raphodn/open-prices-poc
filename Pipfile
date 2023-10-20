@@ -11,6 +11,7 @@ osmpythontools = "*"
 django = "*"
 django-bootstrap5 = "*"
 django-environ = "*"
+gunicorn = "*"
 
 [dev-packages]
 
