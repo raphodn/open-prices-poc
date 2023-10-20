@@ -5,7 +5,7 @@ Exploring ways to enrich OpenFoodFacts with product prices.
 ## Setup
 
 Prerequisites
-- this project is developed in Python
+- this project is developed in Python Django
 - you need `pipenv` installed
 
 1. Install dependencies
@@ -20,8 +20,8 @@ pipenv install
 
 ## Usage
 
-Check the `main.py` file and (un)comment the methods you wish to run
+Run the server
 
 ```
-pipenv run python main.py
+pipenv run python manage.py runserver
 ```

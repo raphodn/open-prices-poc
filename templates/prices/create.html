@@ -12,13 +12,13 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Product details</h5>
+                <h5 class="card-title">
+                    🏷 Product details
+                    <a href="#" class="btn btn-sm btn-outline-primary ml-3" data-bs-toggle="modal" data-bs-target="#scan_product_modal" data-bs-backdrop="static">Scan a barcode</a>
+                </h5>
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-md-4">
                         {% bootstrap_field form.product_code show_label=False %}
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#scan_product_modal" data-bs-backdrop="static" >Scan a barcode</a>
                     </div>
                 </div>
             </div>
@@ -28,12 +28,12 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Product price</h5>
+                <h5 class="card-title">💲 Product price</h5>
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                         {% bootstrap_field form.price show_label=False %}
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-md-4 col-lg-2">
                         {% bootstrap_field form.currency show_label=False %}
                     </div>
                 </div>
@@ -44,10 +44,16 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Location</h5>
+                <h5 class="card-title">
+                    🌍 Location
+                    <a href="#" class="btn btn-sm btn-outline-primary ml-3" data-bs-toggle="modal" data-bs-target="#search_location_modal" data-bs-backdrop="static">Search in OSM</a>
+                </h5>
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-md-4">
                         {% bootstrap_field form.location show_label=False %}
+                    </div>
+                    <div class="col-md-4 col-lg-2">
+                        {% bootstrap_field form.location_osm_id show_label=False %}
                     </div>
                 </div>
             </div>
@@ -57,9 +63,9 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Date</h5>
+                <h5 class="card-title">📅 Date</h5>
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                         {% bootstrap_field form.date show_label=False %}
                     </div>
                 </div>
@@ -81,4 +87,26 @@
 
 {% block modals %}
 {% include "prices/_scan_product_modal.html" %}
+{% include "prices/_search_location_modal.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+function checkOpenFoodFacts(productCode) {
+    if (productCode.length === 13) {
+        // TODO: API call to get product details
+    }
+}
+document.addEventListener("DOMContentLoaded", function() {
+    var productCodeInputElement = document.getElementById("id_product_code");
+    productCodeInputElement.addEventListener("input", function () {
+        console.log("Input value changed via UI. New value: '%s'", this.value);
+        checkOpenFoodFacts(this.value);
+    });
+    observeElement(productCodeInputElement, "value", function (oldValue, newValue) {
+        console.log("Input value changed via API. Value changed from '%s' to '%s'", oldValue, newValue);
+        checkOpenFoodFacts(newValue);
+    });
+});
+</script>
 {% endblock %}
