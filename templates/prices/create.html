@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load static django_bootstrap5 %}
+{% load django_bootstrap5 %}
 
 {% block content %}
 <div class="container">
@@ -9,26 +9,33 @@
         {% csrf_token %}
 
         <div class="row">
+            <h2>Product details</h2>
             <div class="col-8">
-                {% bootstrap_field form.product_code %}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-4">
-                {% bootstrap_field form.price %}
+                {% bootstrap_field form.product_code show_label=False %}
             </div>
             <div class="col-4">
-                {% bootstrap_field form.currency %}
+                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scan_product_modal">Scan a barcode</a>
             </div>
         </div>
         <div class="row">
-            <div class="col-8">
-                {% bootstrap_field form.location %}
+            <h2>Product price</h2>
+            <div class="col-4">
+                {% bootstrap_field form.price show_label=False %}
+            </div>
+            <div class="col-4">
+                {% bootstrap_field form.currency show_label=False %}
             </div>
         </div>
         <div class="row">
+            <h2>location</h2>
             <div class="col-8">
-                {% bootstrap_field form.date %}
+                {% bootstrap_field form.location show_label=False %}
+            </div>
+        </div>
+        <div class="row">
+            <h2>Date</h2>
+            <div class="col-8">
+                {% bootstrap_field form.date show_label=False %}
             </div>
         </div>
 
@@ -41,4 +48,8 @@
         </div>
     </form>
 </div>
+{% endblock %}
+
+{% block modals %}
+{% include "prices/_scan_product_modal.html" %}
 {% endblock %}

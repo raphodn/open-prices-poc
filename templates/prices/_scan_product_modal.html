@@ -1,0 +1,53 @@
+<div class="modal fade" id="scan_product_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Scan a barcode with your camera</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="reader" width="500px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="https://unpkg.com/html5-qrcode"></script>
+<script type="text/javascript">
+    function onScanSuccess(decodedText, decodedResult) {
+  // handle the scanned code as you like, for example:
+  console.log(`Code matched = ${decodedText}`, decodedResult);
+}
+
+function onScanFailure(error) {
+  // handle scan failure, usually better to ignore and keep scanning.
+  // for example:
+  console.warn(`Code scan error = ${error}`);
+}
+
+let config = {
+  fps: 10,
+  qrbox: {width: 300, height: 300},
+  rememberLastUsedCamera: true,
+  // Only support camera scan type.
+  supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
+};
+
+const formatsToSupport = [
+    Html5QrcodeSupportedFormats.EAN_13,
+];
+
+let html5QrcodeScanner = new Html5QrcodeScanner(
+  "reader",
+  config,
+  formatsToSupport,
+  /* verbose= */ false);
+
+document.addEventListener("DOMContentLoaded", function() {
+    var modal = document.getElementById('scan_product_modal');
+    modal.addEventListener('shown.bs.modal', function (event) {
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    });
+});
+</script>
