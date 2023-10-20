@@ -15,15 +15,18 @@
 
 <script type="text/javascript" src="https://unpkg.com/html5-qrcode"></script>
 <script type="text/javascript">
-    function onScanSuccess(decodedText, decodedResult) {
-  // handle the scanned code as you like, for example:
+function onScanSuccess(decodedText, decodedResult) {
   console.log(`Code matched = ${decodedText}`, decodedResult);
+  // update input
+  document.getElementById("id_product_code").value = decodedText;
+  // close modal
+  var modalElement = document.getElementById("scan_product_modal");
+  var modal = bootstrap.Modal.getInstance(modalElement);
+  modal.hide();
 }
 
 function onScanFailure(error) {
-  // handle scan failure, usually better to ignore and keep scanning.
-  // for example:
-  console.warn(`Code scan error = ${error}`);
+//   console.warn(`Code scan error = ${error}`);
 }
 
 let config = {
@@ -35,6 +38,7 @@ let config = {
 };
 
 const formatsToSupport = [
+    Html5QrcodeSupportedFormats.QR_CODE,
     Html5QrcodeSupportedFormats.EAN_13,
 ];
 
@@ -45,9 +49,12 @@ let html5QrcodeScanner = new Html5QrcodeScanner(
   /* verbose= */ false);
 
 document.addEventListener("DOMContentLoaded", function() {
-    var modal = document.getElementById('scan_product_modal');
-    modal.addEventListener('shown.bs.modal', function (event) {
+    var modalElement = document.getElementById("scan_product_modal");
+    modalElement.addEventListener("shown.bs.modal", function (event) {
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    });
+    modalElement.addEventListener("hidden.bs.modal", function (event) {
+        html5QrcodeScanner.clear();
     });
 });
 </script>
