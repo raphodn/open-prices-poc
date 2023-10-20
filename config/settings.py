@@ -23,6 +23,7 @@ else:
     DEBUG = False
 
 ALLOWED_HOSTS = [
+    "127.0.0.1",
     "localhost",
     "open-prices.osc-fr1.scalingo.io",
 ]
@@ -70,6 +71,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # custom
+                "common.settings_context_processors.expose_settings",
             ],
         },
     },
@@ -131,3 +134,8 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Misc
+# ------------------------------------------------------------------------------
+
+GITHUB_REPO_URL = "https://github.com/raphodn/open-prices"
