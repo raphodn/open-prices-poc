@@ -1,43 +1,72 @@
 {% extends "layouts/base.html" %}
 {% load django_bootstrap5 %}
 
+{% block title %}Add a price - {{ block.super }}{% endblock %}
+
 {% block content %}
 <div class="container">
-    <h1>Price: create form</h1>
+    <h1>Add a price</h1>
 
-    <form id="question_create_form" method="POST" action="">
+    <form id="price_create_form" method="POST" action="">
         {% csrf_token %}
 
-        <div class="row">
-            <h2>Product details</h2>
-            <div class="col-8">
-                {% bootstrap_field form.product_code show_label=False %}
-            </div>
-            <div class="col-4">
-                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scan_product_modal">Scan a barcode</a>
-            </div>
-        </div>
-        <div class="row">
-            <h2>Product price</h2>
-            <div class="col-4">
-                {% bootstrap_field form.price show_label=False %}
-            </div>
-            <div class="col-4">
-                {% bootstrap_field form.currency show_label=False %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Product details</h5>
+                <div class="row">
+                    <div class="col-sm-8">
+                        {% bootstrap_field form.product_code show_label=False %}
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scan_product_modal">Scan a barcode</a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <h2>location</h2>
-            <div class="col-8">
-                {% bootstrap_field form.location show_label=False %}
+
+        <br />
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Product price</h5>
+                <div class="row">
+                    <div class="col-sm-4">
+                        {% bootstrap_field form.price show_label=False %}
+                    </div>
+                    <div class="col-sm-2">
+                        {% bootstrap_field form.currency show_label=False %}
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <h2>Date</h2>
-            <div class="col-8">
-                {% bootstrap_field form.date show_label=False %}
+
+        <br />
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Location</h5>
+                <div class="row">
+                    <div class="col-sm-8">
+                        {% bootstrap_field form.location show_label=False %}
+                    </div>
+                </div>
             </div>
         </div>
+
+        <br />
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Date</h5>
+                <div class="row">
+                    <div class="col-sm-4">
+                        {% bootstrap_field form.date show_label=False %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
 
         <div class="row">
             <div class="col">

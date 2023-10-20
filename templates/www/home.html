@@ -1,9 +1,13 @@
 {% extends "layouts/base.html" %}
 
+{% block title %}Home - {{ block.super }}{% endblock %}
+
 {% block content %}
 <div class="container">
-    <h1>Welcome !</h1>
+    <h1>Welcome to Open Prices!</h1>
 
-    <a href="{% url 'prices:create' %}" class="btn btn-outline-primary">Add price</a>
+    <br />
+
+    <a href="{% url 'prices:create' %}" class="btn btn-outline-primary">Start by adding a price</a>
 </div>
 {% endblock %}
