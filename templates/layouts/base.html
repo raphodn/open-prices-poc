@@ -32,19 +32,21 @@
         {% endblock %}
 
         <main id="main" role="main">
-            {% block breadcrumbs %}{% endblock %}
+            <div class="container max-width-940">
+                {% block breadcrumbs %}{% endblock %}
 
-            {% block messages %}
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        {% bootstrap_messages %}
+                {% block messages %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            {% bootstrap_messages %}
+                        </div>
                     </div>
                 </div>
-            </div>
-            {% endblock %}
+                {% endblock %}
 
-            {% block content %}{% endblock %}
+                {% block content %}{% endblock %}
+            </div>
         </main>
 
         {% block footer %}

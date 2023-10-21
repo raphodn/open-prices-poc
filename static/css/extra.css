@@ -3,16 +3,34 @@ main {
     padding-bottom: 20px;
 }
 
-#location_osm_search_results > ul {
+@media (min-width: 992px) {
+    .container.max-width-940 {
+        max-width: 940px !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container.max-width-940 {
+        max-width: 940px !important;
+    }
+}
+
+.container.max-width-940 {
+    max-width: 940px !important;
+}
+
+#location_osm_search_results>ul {
     list-style: none;
     padding-left: 0;
 }
-#location_osm_search_results > ul > li {
+
+#location_osm_search_results>ul>li {
     padding: 5px;
     margin-bottom: 5px;
     border: 1px solid rgba(0, 0, 0, 0.175);
     border-radius: 0.375rem;
 }
-#location_osm_search_results > ul > li:last-child {
+
+#location_osm_search_results>ul>li:last-child {
     margin-bottom: 0;
 }

@@ -1,13 +1,27 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}Home - {{ block.super }}{% endblock %}
+{% block title %}Home {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Welcome to Open Prices!</h1>
+<h1>Welcome to Open Prices!</h1>
 
-    <br />
+<br />
 
-    <a href="{% url 'prices:create' %}" class="btn btn-outline-primary">Start by adding a price</a>
+<div class="card">
+    <div class="card-body">
+        <p class="card-text">
+            <strong>A simple web app to add product prices</strong>
+            <ol>
+                <li>Scan the product barcode</li>
+                <li>Add its current price</li>
+                <li>We'll also need your location details (OpenStreetMap node)</li>
+                <li>That's it!</li>
+            </ol>
+        </p>
+    </div>
 </div>
+
+<br />
+
+<a href="{% url 'prices:create' %}" class="btn btn-primary">🚀 Start by adding a price</a>
 {% endblock %}
