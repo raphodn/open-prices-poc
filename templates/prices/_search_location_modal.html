@@ -40,7 +40,7 @@ async function nominatimSearch() {
                 li.innerHTML = `📍 ${locationText}`;
                 li.addEventListener("click", function (event) {
                     // update input
-                    document.getElementById("id_location").value = locationText;
+                    document.getElementById("id_location_name").value = locationText;
                     document.getElementById("id_location_osm_id").value = locationOSMID;
                     // close modal
                     var modal = bootstrap.Modal.getInstance(modalElement);
