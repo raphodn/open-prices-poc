@@ -1,5 +1,6 @@
 import os
 import environ
+import dj_database_url
 
 from pathlib import Path
 
@@ -83,13 +84,14 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# https://doc.scalingo.com/languages/python/django/start
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+try:
+  database_url = os.environ["DATABASE_URL"]
+except KeyError:
+  database_url = "file:///{}".format(os.path.join(BASE_DIR, 'db.sqlite3'))
+
+DATABASES = { 'default': dj_database_url.config() }
 
 
 # Password validation
