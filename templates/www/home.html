@@ -21,6 +21,13 @@
     </div>
 </div>
 
+{% if price_count %}
+    <br />
+    <div class="alert alert-success mb-0" role="alert">
+        Already {{ price_count }} price{{ price_count|pluralize }}!
+    </div>
+{% endif %}
+
 <br />
 
 <a href="{% url 'prices:create' %}" class="btn btn-primary">🚀 Start by adding a price</a>
