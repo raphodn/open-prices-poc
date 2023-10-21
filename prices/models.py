@@ -9,6 +9,7 @@ class Price(models.Model):
     product_code = models.CharField(verbose_name="Product code")
     price = models.DecimalField(verbose_name="Price", max_digits=10, decimal_places=2)
     currency = models.CharField(verbose_name="Currency", choices=CURRENCY_CHOICES, default=CURRENCY_EURO)
+    location_name = models.CharField(verbose_name="Location name")
     location_osm_id = models.PositiveIntegerField(verbose_name="Location (OSM ID)")
     date = models.DateField(verbose_name="Date")
 

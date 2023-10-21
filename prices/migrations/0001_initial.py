@@ -36,6 +36,7 @@ class Migration(migrations.Migration):
                         choices=[("€", "€")], default="€", verbose_name="Currency"
                     ),
                 ),
+                ("location", models.CharField(verbose_name="Location name")),
                 (
                     "location_osm_id",
                     models.PositiveIntegerField(verbose_name="Location (OSM ID)"),
