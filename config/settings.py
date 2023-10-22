@@ -1,8 +1,8 @@
 import os
-import environ
-import dj_database_url
-
 from pathlib import Path
+
+import dj_database_url
+import environ
 
 
 env = environ.Env()
@@ -90,11 +90,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://doc.scalingo.com/languages/python/django/start
 
 try:
-  database_url = os.environ["DATABASE_URL"]
+    database_url = os.environ["DATABASE_URL"]
 except KeyError:
-  database_url = "file:///{}".format(os.path.join(BASE_DIR, 'db.sqlite3'))
+    database_url = "file:///{}".format(os.path.join(BASE_DIR, "db.sqlite3"))
 
-DATABASES = { 'default': dj_database_url.config() }
+DATABASES = {"default": dj_database_url.config()}
 
 
 # Password validation
@@ -131,7 +131,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = "staticfiles"
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 

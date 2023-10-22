@@ -1,5 +1,6 @@
 import sys
-from common.api import elefan, supabase, openfoodfacts
+
+from common.api import elefan, openfoodfacts, supabase
 from common.utils import format_elefan_product_for_supabase
 
 
@@ -19,7 +20,7 @@ def send_all_elefan_products_to_supabase_price():
     progress = 0
     for elefan_product in elefan_products:
         elefan_product_formatted = format_elefan_product_for_supabase(elefan_product)
-        response = supabase.price_create(elefan_product_formatted)
+        supabase.price_create(elefan_product_formatted)
         progress += 1
         if (progress % 50) == 0:
             print(f"{progress}...")
@@ -39,7 +40,7 @@ def check_supabase_product_is_in_openfoodfacts(product_code=None):
         try:
             openfoodfacts.get_product(supabase_price["product_code"])
             supabase.price_update(supabase_price["id"], {"in_off": True})
-        except:
+        except:  # noqa
             supabase.price_update(supabase_price["id"], {"in_off": False})
         progress += 1
         if (progress % 50) == 0:
