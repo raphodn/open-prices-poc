@@ -15,6 +15,12 @@ main {
     }
 }
 
+@media all and (max-width: 767px) {
+    [class^='col-sm-'] {
+        margin-bottom: 1rem;
+    }
+}
+
 .container.max-width-940 {
     max-width: 940px !important;
 }
@@ -33,4 +39,10 @@ main {
 
 #location_osm_search_results>ul>li:last-child {
     margin-bottom: 0;
+}
+
+/* adds a 'opens in new tab' icon. but not for images */
+a[target="_blank"]::after {
+    content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
+    margin: 0 3px 0 5px;
 }
