@@ -19,3 +19,30 @@ function observeElement(element, property, callback, delay = 0) {
         });
     }
 }
+
+
+function getOrCreateLocalStorageItem(itemKey, defaultValue=[]) {
+    if (!localStorage.getItem(itemKey)) {
+        localStorage.setItem(itemKey, JSON.stringify(defaultValue));
+    }
+    return localStorage.getItem(itemKey);
+}
+
+function clearLocalStorageItem(itemKey, defaultValue=[]) {
+    return localStorage.setItem(itemKey, JSON.stringify(defaultValue));
+}
+
+function getParsedLocalStorageItem(itemKey) {
+    let item = getOrCreateLocalStorageItem(itemKey);
+    return JSON.parse(item);
+}
+
+function addObjectToLocalStorageItemList(itemKey, obj, avoidDuplicates=true) {
+    let itemJSON = getParsedLocalStorageItem(itemKey);
+    var existingItem = itemJSON.find(item => JSON.stringify(item) === JSON.stringify(obj));
+    if (avoidDuplicates && existingItem) {
+        return;
+    }
+    itemJSON[itemJSON.length] = obj;
+    return localStorage.setItem(itemKey, JSON.stringify(itemJSON));
+}

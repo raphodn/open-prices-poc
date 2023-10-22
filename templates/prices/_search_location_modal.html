@@ -14,7 +14,8 @@
                         <button type="submit" class="btn btn-primary" onclick="nominatimSearch()">Search</button>
                     </div>
                 </div>
-                <section id="location_osm_search_results" class="mt-3"></section>
+                <section id="location_osm_search_results" class="mt-sm-3"></section>
+                <section id="location_osm_recent_locations" class="mt-3"></section>
             </div>
             <div class="modal-footer">
                 <span class="text-muted">powered by <a href="https://nominatim.openstreetmap.org" target="_blank">Nominatim</a></span>
@@ -25,10 +26,79 @@
 
 
 <script type="text/javascript">
-async function nominatimSearch() {
+RECENT_LOCATIONS_LOCALSTORAGE_ITEM_KEY = "recentLocations";
+
+function selectResult(locationText, locationOSMID) {
     var modalElement = document.getElementById("search_location_modal");
+
+    // update price form
+    document.getElementById("id_location_name").value = locationText;
+    document.getElementById("id_location_osm_id").value = locationOSMID;
+    // add to localStorage
+    addObjectToLocalStorageItemList(RECENT_LOCATIONS_LOCALSTORAGE_ITEM_KEY, {"display_name": locationText, "osm_id": locationOSMID});
+    // close modal
+    var modal = bootstrap.Modal.getInstance(modalElement);
+    modal.hide();
+}
+
+function createSearchResultListElement(locationText, locationOSMID) {
+    var li = document.createElement("li");
+    li.id = locationOSMID;
+    li.title = locationText;
+    li.style.cursor = "pointer";
+    li.innerHTML = `📍 ${locationText}`;
+    li.addEventListener("click", function (event) {
+        selectResult(locationText, locationOSMID);
+    });
+    return li;
+}
+
+function populateRecentLocations() {
+    const recentLocations = getParsedLocalStorageItem("recentLocations");
+    var recentLocationsElement = document.getElementById("location_osm_recent_locations");
+
+    // init
+    recentLocationsElement.innerHTML = "";
+
+    if (recentLocations.length) {
+        var hr = document.createElement("hr");
+        recentLocationsElement.appendChild(hr);
+
+        var ul = document.createElement("ul");
+        for (var i = 0; i < recentLocations.length; ++i) {
+            var li = createSearchResultListElement(recentLocations[i].display_name, recentLocations[i].osm_id);
+            ul.appendChild(li);
+        }
+        recentLocationsElement.appendChild(ul);
+
+        var clearButton = document.createElement("button");
+        clearButton.innerHTML = "Clear recent";
+        clearButton.classList.add("btn", "btn-sm", "btn-outline-primary");
+        clearButton.onclick = clearRecentLocations;
+        recentLocationsElement.appendChild(clearButton);
+    } else {
+        var hr = document.createElement("hr");
+        recentLocationsElement.appendChild(hr);
+
+        var p = document.createElement("p");
+        p.innerHTML = "no recent locations";
+        recentLocationsElement.innerHTML = "";
+        recentLocationsElement.appendChild(p);
+    }
+}
+
+function clearRecentLocations() {
+    var recentLocationsElement = document.getElementById("location_osm_recent_locations");
+    recentLocationsElement.innerHTML = "";
+    clearLocalStorageItem(RECENT_LOCATIONS_LOCALSTORAGE_ITEM_KEY);
+}
+
+async function nominatimSearch() {
     var searchInputElement = document.getElementById("id_location_osm");
     var searchResultsElement = document.getElementById("location_osm_search_results");
+
+    // init
+    searchResultsElement.innerHTML = "";
 
     if (searchInputElement.value.length) {
         const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${searchInputElement.value}&format=json&limit=5`);
@@ -36,19 +106,7 @@ async function nominatimSearch() {
         if (locations.length) {
             var ul = document.createElement("ul");
             for (var i = 0; i < locations.length; ++i) {
-                var locationText = locations[i].display_name;
-                var locationOSMID = locations[i].osm_id;
-                var li = document.createElement("li");
-                li.style.cursor = "pointer";
-                li.innerHTML = `📍 ${locationText}`;
-                li.addEventListener("click", function (event) {
-                    // update input
-                    document.getElementById("id_location_name").value = locationText;
-                    document.getElementById("id_location_osm_id").value = locationOSMID;
-                    // close modal
-                    var modal = bootstrap.Modal.getInstance(modalElement);
-                    modal.hide();
-                });
+                var li = createSearchResultListElement(locations[i].display_name, locations[i].osm_id);
                 ul.appendChild(li);
             }
             searchResultsElement.appendChild(ul);
@@ -67,6 +125,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // focus input
     modalElement.addEventListener("shown.bs.modal", function (event) {
         searchInputElement.focus();
+        populateRecentLocations();
     });
+
+
 });
 </script>
