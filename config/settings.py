@@ -43,7 +43,8 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    "django_bootstrap5"
+    "django_bootstrap5",  # django-bootstrap5
+    "django_extensions",  # django-extensions
 ]
 
 LOCAL_APPS = ["common", "prices", "www"]
