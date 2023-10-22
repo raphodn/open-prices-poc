@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}Home {{ block.super }}{% endblock %}
+{% block title %}Home{{ block.super }}{% endblock %}
 
 {% block content %}
 <h1>Welcome to Open Prices!</h1>
@@ -24,7 +24,7 @@
 {% if price_count %}
     <br />
     <div class="alert alert-info mb-0" role="alert">
-        Already {{ price_count }} price{{ price_count|pluralize }}!
+        Already <a href="{% url 'prices:list' %}">{{ price_count }} price{{ price_count|pluralize }}</a>!
     </div>
 {% endif %}
 

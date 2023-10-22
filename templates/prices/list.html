@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+{% load render_table from django_tables2 %}
+{% load django_bootstrap5 %}
+
+{% block title %}All prices{{ block.super }}{% endblock %}
+
+{% block content %}
+<h1>All prices <span class="fs-3 text-muted">{{ prices.count }}</span></h1>
+
+<div class="row">
+    <div class="col-12">
+        {% render_table table %}
+    </div>
+</div>
+{% endblock %}

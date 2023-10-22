@@ -44,6 +44,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "django_bootstrap5",  # django-bootstrap5
+    "django_tables2",  # django-tables2
     "django_extensions",  # django-extensions
 ]
 
