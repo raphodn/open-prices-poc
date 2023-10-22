@@ -12,7 +12,7 @@ class Price(models.Model):
     currency = models.CharField(verbose_name="Currency", choices=CURRENCY_CHOICES, default=CURRENCY_EURO)
 
     location_name = models.CharField(verbose_name="Location name")
-    location_osm_id = models.PositiveIntegerField(verbose_name="Location (OSM ID)")
+    location_osm_id = models.PositiveBigIntegerField(verbose_name="Location (OSM ID)")
 
     date = models.DateField(verbose_name="Date")
 
