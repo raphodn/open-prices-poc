@@ -17,6 +17,7 @@ psycopg2-binary = "*"
 whitenoise = "*"
 django-extensions = "*"
 django-debug-toolbar = "*"
+django-tables2 = "*"
 
 [dev-packages]
 black = "*"
