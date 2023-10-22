@@ -1,5 +1,7 @@
 import json
-from collections import Counter
+
+
+# from collections import Counter
 
 
 EXPORT_FILE = "local_data/20231013_elefan_products.json"
@@ -23,11 +25,7 @@ def find_product_by_code(code: str):
 
     product_list = read_json_file()
     product = next(
-        (
-            product
-            for product in product_list
-            if (product["code"] == code or product["code"] == int(code))
-        ),
+        (product for product in product_list if (product["code"] == code or product["code"] == int(code))),
         None,
     )
 
@@ -42,9 +40,7 @@ def get_products_with_valid_code():
     print("Filtering products with valid code")
 
     product_list = read_json_file()
-    product_list_filtered = list(
-        filter(lambda product: len(str(product["code"])) == 13, product_list)
-    )
+    product_list_filtered = list(filter(lambda product: len(str(product["code"])) == 13, product_list))
 
     # product_list_filtered_categories = [product["famille"]["nom"] for product in product_list_filtered]
     # print(Counter(product_list_filtered_categories))

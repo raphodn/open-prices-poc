@@ -1,6 +1,6 @@
 import os
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 from supabase import create_client
 
 
@@ -31,9 +31,7 @@ def price_all():
 def price_find_by_product_code(product_code):
     client = get_client()
     table = get_table()
-    data = (
-        client.table(table).select("*").eq("product_code", str(product_code)).execute()
-    )
+    data = client.table(table).select("*").eq("product_code", str(product_code)).execute()
     print(data.data)
     return data.data
 

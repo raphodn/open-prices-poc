@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 
 from openfoodfacts import API, APIVersion, Country, Environment, Flavor
 
@@ -25,5 +24,5 @@ def get_product(code):
     client = get_client()
     try:
         return client.product.get(code)
-    except:
+    except:  # noqa
         raise ValueError("Product not found")
