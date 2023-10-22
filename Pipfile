@@ -16,6 +16,7 @@ dj-database-url = "*"
 psycopg2-binary = "*"
 whitenoise = "*"
 django-extensions = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 

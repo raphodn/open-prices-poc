@@ -132,7 +132,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_ROOT = 'staticfiles'
-STATIC_URL = "/static/"
+STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
@@ -141,6 +141,15 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Django Debug Toolbar
+# https://django-debug-toolbar.readthedocs.io/
+# ------------------------------------------------------------------------------
+
+if DEBUG:
+    INSTALLED_APPS += ["debug_toolbar"]  # django-debug-toolbar
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+    INTERNAL_IPS = ["127.0.0.1"]
 
 # Misc
 # ------------------------------------------------------------------------------
