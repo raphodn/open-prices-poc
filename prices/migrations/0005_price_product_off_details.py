@@ -34,4 +34,9 @@ class Migration(migrations.Migration):
                 verbose_name="Product OFF DB",
             ),
         ),
+        migrations.AddField(
+            model_name="price",
+            name="product_off_image_url",
+            field=models.URLField(blank=True, null=True, verbose_name="Product image URL (OFF)"),
+        ),
     ]
