@@ -47,6 +47,7 @@ THIRD_PARTY_APPS = [
     "django_tables2",  # django-tables2
     "django_extensions",  # django-extensions
     "rest_framework",  # djangorestframework
+    "django_filters",  # django-filter
 ]
 
 LOCAL_APPS = ["common", "api", "prices", "www"]
