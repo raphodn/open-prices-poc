@@ -46,6 +46,7 @@ THIRD_PARTY_APPS = [
     "django_bootstrap5",  # django-bootstrap5
     "django_tables2",  # django-tables2
     "django_extensions",  # django-extensions
+    "rest_framework",  # djangorestframework
 ]
 
 LOCAL_APPS = ["common", "prices", "www"]
@@ -151,6 +152,18 @@ if DEBUG:
     INSTALLED_APPS += ["debug_toolbar"]  # django-debug-toolbar
     MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
     INTERNAL_IPS = ["127.0.0.1"]
+
+
+# Django REST Framework (DRF)
+# https://www.django-rest-framework.org/
+# ------------------------------------------------------------------------------
+
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 100,
+}
+
 
 # Misc
 # ------------------------------------------------------------------------------
