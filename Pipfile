@@ -18,6 +18,9 @@ whitenoise = "*"
 django-extensions = "*"
 django-debug-toolbar = "*"
 django-tables2 = "*"
+djangorestframework = "*"
+django-filter = "*"
+drf-spectacular = "*"
 
 [dev-packages]
 black = "*"

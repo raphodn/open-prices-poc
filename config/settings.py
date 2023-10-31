@@ -46,9 +46,12 @@ THIRD_PARTY_APPS = [
     "django_bootstrap5",  # django-bootstrap5
     "django_tables2",  # django-tables2
     "django_extensions",  # django-extensions
+    "rest_framework",  # djangorestframework
+    "drf_spectacular",  # drf-spectacular
+    "django_filters",  # django-filter
 ]
 
-LOCAL_APPS = ["common", "prices", "www"]
+LOCAL_APPS = ["common", "api", "prices", "www"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -143,6 +146,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
 # Django Debug Toolbar
 # https://django-debug-toolbar.readthedocs.io/
 # ------------------------------------------------------------------------------
@@ -151,6 +155,29 @@ if DEBUG:
     INSTALLED_APPS += ["debug_toolbar"]  # django-debug-toolbar
     MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
     INTERNAL_IPS = ["127.0.0.1"]
+
+
+# Django REST Framework (DRF)
+# https://www.django-rest-framework.org/
+# ------------------------------------------------------------------------------
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 100,
+}
+
+
+# DRF Spectacular
+# https://drf-spectacular.readthedocs.io/en/latest/settings.html
+# ------------------------------------------------------------------------------
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Open Prices API",
+    # "SWAGGER_UI_SETTINGS": {"defaultModelsExpandDepth": -1},  # hide model schemas
+}
+
 
 # Misc
 # ------------------------------------------------------------------------------
