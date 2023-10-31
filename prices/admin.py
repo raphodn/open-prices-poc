@@ -11,10 +11,11 @@ class PriceAdmin(admin.ModelAdmin):
         "price",
         "currency",
         "location_osm_id",
+        "source",
         "created",
     )
 
-    readonly_fields = ["created"]
+    readonly_fields = Price.READONLY_FIELDS
 
     def has_add_permission(self, request, obj=None):
         return False

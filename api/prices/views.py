@@ -9,3 +9,6 @@ class PriceViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.Gene
     queryset = Price.objects.all()
     serializer_class = PriceSerializer
     filterset_class = PriceFilter
+
+    def perform_create(self, serializer):
+        serializer.save(source=Price.SOURCE_API)
