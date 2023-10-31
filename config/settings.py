@@ -157,6 +157,17 @@ if DEBUG:
     INTERNAL_IPS = ["127.0.0.1"]
 
 
+# Shell Plus
+# ------------------------------------------------------------------------------
+
+SHELL_PLUS = "ipython"
+SHELL_PLUS_IMPORTS = [
+    "import csv, json, yaml, time",
+    "from datetime import datetime, date, timedelta",
+    "from common.api import openfoodfacts, openstreetmap",
+]
+
+
 # Django REST Framework (DRF)
 # https://www.django-rest-framework.org/
 # ------------------------------------------------------------------------------

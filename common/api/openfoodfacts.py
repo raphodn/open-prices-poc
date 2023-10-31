@@ -22,7 +22,4 @@ def get_client():
 
 def get_product(code):
     client = get_client()
-    try:
-        return client.product.get(code)
-    except:  # noqa
-        raise ValueError("Product not found")
+    return client.product.get(code)
