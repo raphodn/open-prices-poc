@@ -21,6 +21,7 @@ django-tables2 = "*"
 djangorestframework = "*"
 django-filter = "*"
 drf-spectacular = "*"
+factory-boy = "*"
 
 [dev-packages]
 black = "*"
