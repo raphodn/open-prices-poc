@@ -28,7 +28,6 @@ black = "*"
 flake8 = "*"
 isort = "*"
 pre-commit = "*"
-pygraphviz = "*"
 
 [requires]
 python_version = "3.9"
