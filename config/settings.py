@@ -49,7 +49,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",  # djangorestframework
 ]
 
-LOCAL_APPS = ["common", "prices", "www"]
+LOCAL_APPS = ["common", "api", "prices", "www"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
