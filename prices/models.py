@@ -5,6 +5,9 @@ from django.utils import timezone
 class Price(models.Model):
     CURRENCY_EURO = "€"
     CURRENCY_CHOICES = [(CURRENCY_EURO, CURRENCY_EURO)]
+    SOURCE_FORM = "FORM"
+    SOURCE_API = "API"
+    SOURCE_CHOICES = [(SOURCE_FORM, "Form"), (SOURCE_API, "API")]
 
     product_code = models.CharField(verbose_name="Product code")
 
@@ -15,6 +18,8 @@ class Price(models.Model):
     location_name = models.CharField(verbose_name="Location name", blank=True)
 
     date = models.DateField(verbose_name="Date")
+
+    source = models.CharField(verbose_name="Currency", choices=SOURCE_CHOICES, default=SOURCE_FORM)
 
     created = models.DateTimeField(verbose_name="Creation date", default=timezone.now)
 

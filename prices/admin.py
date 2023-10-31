@@ -11,6 +11,7 @@ class PriceAdmin(admin.ModelAdmin):
         "price",
         "currency",
         "location_osm_id",
+        "source",
         "created",
     )
 
