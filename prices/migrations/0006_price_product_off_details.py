@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("prices", "0004_price_source"),
+        ("prices", "0005_price_source_name_fix"),
     ]
 
     operations = [

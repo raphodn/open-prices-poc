@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 
@@ -13,3 +14,18 @@ def format_elefan_product_for_supabase(elefan_product_json):
         "location": "L'éléfàn, Grenoble",
         "date": datetime.today().strftime("%Y-%m-%d"),
     }
+
+
+def remove_html_tags(text):
+    """
+    Remove html tags from a string
+    https://medium.com/@jorlugaqui/how-to-strip-html-tags-from-a-string-in-python-7cb81a2bbf44
+    """
+    clean = re.compile("<.*?>")
+    return re.sub(clean, "", text)
+
+
+def truncate_with_ellipsis(text, ellipsis_threshold=None, ellipsis_string="…"):  # "(…)"
+    if ellipsis_threshold and len(text) > ellipsis_threshold:
+        text = text[: (ellipsis_threshold - len(ellipsis_string))] + f" {ellipsis_string}"
+    return text

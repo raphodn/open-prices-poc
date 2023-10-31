@@ -162,7 +162,7 @@ if DEBUG:
 
 SHELL_PLUS = "ipython"
 SHELL_PLUS_IMPORTS = [
-    "import csv, json, yaml",
+    "import csv, json, yaml, time",
     "from datetime import datetime, date, timedelta",
     "from common.api import openfoodfacts, openstreetmap",
 ]

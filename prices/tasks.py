@@ -2,13 +2,15 @@ from common.api import openfoodfacts
 from prices.models import Price
 
 
-def fetch_and_update_product_info(price: Price):
+def fetch_and_update_product_info_from_openfoodfacts(price: Price):
     # we need at least the 'product_code'
     if not price.product_code:
+        print("Price task error: price without product_code")
         return
 
     # 'product_off_name' already filled
     if price.product_off_name:
+        print("Price task info: price already has product_off_name")
         return
 
     # check if we already fetched data on another price
@@ -19,21 +21,28 @@ def fetch_and_update_product_info(price: Price):
     )
     if existing_product_qs.count():
         existing_product = existing_product_qs.first()
-        price.product_in_off = existing_product.product_in_off
-        price.product_off_db = existing_product.product_off_db
-        price.product_off_name = existing_product.product_off_name
-        price.product_off_image_url = existing_product.product_off_image_url
-        price.save()
+        if existing_product.product_off_name:
+            print("Price task info: found existing_product")
+            price.product_in_off = existing_product.product_in_off
+            price.product_off_db = existing_product.product_off_db
+            price.product_off_name = existing_product.product_off_name
+            price.product_off_image_url = existing_product.product_off_image_url
+            price.save()
+            return
 
+    # fetch data from OFF
     try:
         response = openfoodfacts.get_product(price.product_code)
-        if len(response["errors"]):
-            price.product_in_off = False
-        else:
-            price.product_in_off = True
-            price.product_off_db = Price.OFF_SOURCE_OFF
+        print("Price task info: updating data from OpenFoodFacts")
+        price.product_in_off = True
+        price.product_off_db = Price.OFF_SOURCE_OFF
+        if "product_name" in response["product"]:
             price.product_off_name = response["product"]["product_name"]
+        if "image_url" in response["product"]:
             price.product_off_image_url = response["product"]["image_url"]
+        price.save()
+    except Exception as e:
+        print("Price task info: error returned from OpenFoodFacts")
+        if e.response and e.response.status_code == 404:
+            price.product_in_off = False
             price.save()
-    except:  # noqa
-        return
