@@ -15,7 +15,7 @@ class PriceAdmin(admin.ModelAdmin):
         "created",
     )
 
-    readonly_fields = ["created"]
+    readonly_fields = Price.READONLY_FIELDS
 
     def has_add_permission(self, request, obj=None):
         return False

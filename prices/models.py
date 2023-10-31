@@ -8,6 +8,7 @@ class Price(models.Model):
     SOURCE_FORM = "FORM"
     SOURCE_API = "API"
     SOURCE_CHOICES = [(SOURCE_FORM, "Form"), (SOURCE_API, "API")]
+    READONLY_FIELDS = ["source", "created"]
 
     product_code = models.CharField(verbose_name="Product code")
 
