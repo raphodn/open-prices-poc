@@ -40,7 +40,7 @@ class PriceCreateApiTest(TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(Price.objects.count(), 1 + 1)
         price = Price.objects.last()
-        self.assertEqual(price.location_osm_name, "")
+        self.assertEqual(price.location_osm_name, None)
         # try to pass a custom "product_off_name"
         price_data = PRICE_JSON.copy()
         price_data["product_off_name"] = "CUSTOM"
