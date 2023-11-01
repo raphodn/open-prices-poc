@@ -75,17 +75,13 @@ class Price(models.Model):
 
 
 @receiver(post_save, sender=Price)
-def price_post_create_product_info(sender, instance, created, **kwargs):
+def price_post_create_fetch_info(sender, instance, created, **kwargs):
     if created:
         if instance.product_code:
             from prices.tasks import fetch_and_update_product_info_from_openfoodfacts
 
             fetch_and_update_product_info_from_openfoodfacts(instance)
-
-
-@receiver(post_save, sender=Price)
-def price_post_create_location_info(sender, instance, created, **kwargs):
-    if created:
         if instance.location_osm_id:
-            # print("price_post_create_location_info", instance.location_osm_name)
-            pass
+            from prices.tasks import fetch_and_update_location_info_from_openstreetmap
+
+            fetch_and_update_location_info_from_openstreetmap(instance)

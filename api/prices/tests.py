@@ -1,8 +1,9 @@
+from django.db.models import signals
 from django.test import TestCase
 from django.urls import reverse
 
 from prices.factories import PriceFactory
-from prices.models import Price
+from prices.models import Price, price_post_create_fetch_info
 
 
 PRICE_JSON = {"product_code": "0123456789101", "price": 3.5, "location_osm_id": 652825274, "date": "2023-10-30"}
@@ -11,6 +12,7 @@ PRICE_JSON = {"product_code": "0123456789101", "price": 3.5, "location_osm_id": 
 class PriceCreateApiTest(TestCase):
     @classmethod
     def setUpTestData(cls):
+        signals.post_save.disconnect(price_post_create_fetch_info, sender=Price)
         pass
 
     def test_price_create(self):
@@ -54,6 +56,7 @@ class PriceCreateApiTest(TestCase):
 class PriceListApiTest(TestCase):
     @classmethod
     def setUpTestData(cls):
+        signals.post_save.disconnect(price_post_create_fetch_info, sender=Price)
         PriceFactory()
         PriceFactory()
 
@@ -71,6 +74,7 @@ class PriceListApiTest(TestCase):
 class PriceListFilterApiTest(TestCase):
     @classmethod
     def setUpTestData(cls):
+        signals.post_save.disconnect(price_post_create_fetch_info, sender=Price)
         PriceFactory(product_code="1111111111111", price=1.0, date="2023-10-01")
         PriceFactory(product_code="2222222222222", price=2.5, date="2023-10-02")
         PriceFactory(product_code="3333333333333", price=3.25, date="2023-10-03")
