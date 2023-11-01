@@ -28,27 +28,27 @@
 <script type="text/javascript">
 RECENT_LOCATIONS_LOCALSTORAGE_ITEM_KEY = "recentLocations";
 
-function selectResult(locationText, locationOSMID) {
+function selectResult(locationOSMName, locationOSMID) {
     var modalElement = document.getElementById("search_location_modal");
 
     // update price form
-    document.getElementById("id_location_name").value = locationText;
+    document.getElementById("id_location_osm_name").value = locationOSMName;
     document.getElementById("id_location_osm_id").value = locationOSMID;
     // add to localStorage
-    addObjectToLocalStorageItemList(RECENT_LOCATIONS_LOCALSTORAGE_ITEM_KEY, {"display_name": locationText, "osm_id": locationOSMID});
+    addObjectToLocalStorageItemList(RECENT_LOCATIONS_LOCALSTORAGE_ITEM_KEY, {"display_name": locationOSMName, "osm_id": locationOSMID});
     // close modal
     var modal = bootstrap.Modal.getInstance(modalElement);
     modal.hide();
 }
 
-function createSearchResultListElement(locationText, locationOSMID) {
+function createSearchResultListElement(locationOSMName, locationOSMID) {
     var li = document.createElement("li");
     li.id = locationOSMID;
-    li.title = locationText;
+    li.title = locationOSMName;
     li.style.cursor = "pointer";
-    li.innerHTML = `📍 ${locationText}`;
+    li.innerHTML = `📍 ${locationOSMName}`;
     li.addEventListener("click", function (event) {
-        selectResult(locationText, locationOSMID);
+        selectResult(locationOSMName, locationOSMID);
     });
     return li;
 }

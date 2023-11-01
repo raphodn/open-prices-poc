@@ -11,7 +11,7 @@ CATEGORY_FIELD_SEQUENCE = [field.name for field in Price._meta.fields]
 
 class PriceTable(tables.Table):
     product_off_image_url = ImageColumn()
-    location_name = TextEllipsisColumn(attrs={"td": {"title": lambda record: record.location_name}})
+    location_osm_name = TextEllipsisColumn(attrs={"td": {"title": lambda record: record.location_osm_name}})
 
     class Meta:
         model = Price

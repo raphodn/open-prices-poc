@@ -22,7 +22,24 @@ class Price(models.Model):
         (OFF_SOURCE_OBF, "OpenBeautyFacts"),
     ]
 
-    SERIALIZED_FIELDS = ["product_code", "price", "currency", "location_osm_id", "location_name", "date", "created"]
+    OSM_TYPE_NODE = "NODE"
+    OSM_TYPE_WAY = "WAY"
+    OSM_TYPE_RELATION = "RELATION"
+    OSM_TYPE_CHOICES = [
+        (OSM_TYPE_NODE, "Node"),
+        (OSM_TYPE_WAY, "Way"),
+        (OSM_TYPE_RELATION, "Relation"),
+    ]
+
+    SERIALIZED_FIELDS = [
+        "product_code",
+        "price",
+        "currency",
+        "location_osm_id",
+        "location_osm_name",
+        "date",
+        "created",
+    ]
     READONLY_FIELDS = ["source", "created"]
 
     product_code = models.CharField(verbose_name="Product code")
@@ -34,8 +51,17 @@ class Price(models.Model):
     price = models.DecimalField(verbose_name="Price", max_digits=10, decimal_places=2)
     currency = models.CharField(verbose_name="Currency", choices=CURRENCY_CHOICES, default=CURRENCY_EURO)
 
-    location_osm_id = models.PositiveBigIntegerField(verbose_name="Location (OSM ID)")
-    location_name = models.CharField(verbose_name="Location name", blank=True)
+    location_osm_id = models.PositiveBigIntegerField(verbose_name="Location ID (OSM)")
+    location_osm_type = models.CharField(
+        verbose_name="Location type (OSM)", choices=OSM_TYPE_CHOICES, blank=True, null=True
+    )
+    location_osm_name = models.CharField(verbose_name="Location name (OSM)", blank=True, null=True)
+    location_osm_lat = models.DecimalField(
+        verbose_name="Location latitude (OSM)", max_digits=11, decimal_places=7, blank=True, null=True
+    )
+    location_osm_lon = models.DecimalField(
+        verbose_name="Location longitude (OSM)", max_digits=11, decimal_places=7, blank=True, null=True
+    )
 
     date = models.DateField(verbose_name="Date")
 
@@ -61,5 +87,5 @@ def price_post_create_product_info(sender, instance, created, **kwargs):
 def price_post_create_location_info(sender, instance, created, **kwargs):
     if created:
         if instance.location_osm_id:
-            # print("price_post_create_location_info", instance.location_name)
+            # print("price_post_create_location_info", instance.location_osm_name)
             pass
