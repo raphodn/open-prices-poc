@@ -2,19 +2,26 @@ from django.db.models import signals
 from django.test import TestCase
 from django.urls import reverse
 
+from locations.models import Location, location_post_create_fetch_info
 from prices.factories import PriceFactory
-from prices.models import Price, price_post_create_fetch_info
+from prices.models import Price
 from products.models import Product, product_post_create_fetch_info
 
 
-PRICE_JSON = {"product_code": "0123456789101", "price": 3.5, "location_osm_id": 652825274, "date": "2023-10-30"}
+PRICE_JSON = {
+    "product_code": "0123456789101",
+    "price": 3.5,
+    "location_osm_id": 652825274,
+    "location_osm_type": "NODE",
+    "date": "2023-10-30",
+}
 
 
 class PriceCreateApiTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        signals.post_save.disconnect(price_post_create_fetch_info, sender=Price)
         signals.post_save.disconnect(product_post_create_fetch_info, sender=Product)
+        signals.post_save.disconnect(location_post_create_fetch_info, sender=Location)
         pass
 
     def test_price_create(self):
@@ -26,7 +33,9 @@ class PriceCreateApiTest(TestCase):
         self.assertEqual(Price.objects.count(), 1)
         price = Price.objects.last()
         self.assertEqual(price.source, "API")
-        # self.assertEqual(Product.objects.count(), 1)
+        # creates Product & Location
+        self.assertEqual(Product.objects.count(), 1)
+        self.assertEqual(Location.objects.count(), 1)
 
     def test_price_create_readonly_fields(self):
         url = reverse("api:prices-list")  # anonymous user
@@ -43,8 +52,8 @@ class PriceCreateApiTest(TestCase):
 class PriceListApiTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        signals.post_save.disconnect(price_post_create_fetch_info, sender=Price)
         signals.post_save.disconnect(product_post_create_fetch_info, sender=Product)
+        signals.post_save.disconnect(location_post_create_fetch_info, sender=Location)
         PriceFactory()
         PriceFactory()
 
@@ -62,8 +71,8 @@ class PriceListApiTest(TestCase):
 class PriceListFilterApiTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        signals.post_save.disconnect(price_post_create_fetch_info, sender=Price)
         signals.post_save.disconnect(product_post_create_fetch_info, sender=Product)
+        signals.post_save.disconnect(location_post_create_fetch_info, sender=Location)
         PriceFactory(product_code="1111111111111", price=1.0, date="2023-10-01")
         PriceFactory(product_code="2222222222222", price=2.5, date="2023-10-02")
         PriceFactory(product_code="3333333333333", price=3.25, date="2023-10-03")

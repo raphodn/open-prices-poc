@@ -36,7 +36,6 @@ class Price(models.Model):
         "created",
     ]
     READONLY_FIELDS = [
-        "location_osm_type",
         "source",
         "created",
     ]

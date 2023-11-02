@@ -34,7 +34,7 @@ class Location(models.Model):
 
 
 @receiver(post_save, sender=Location)
-def product_post_create_fetch_info(sender, instance, created, **kwargs):
+def location_post_create_fetch_info(sender, instance, created, **kwargs):
     if created:
         from locations.tasks import fetch_product_info_from_openstreetmap
 

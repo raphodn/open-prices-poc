@@ -28,27 +28,28 @@
 <script type="text/javascript">
 RECENT_LOCATIONS_LOCALSTORAGE_ITEM_KEY = "recentLocations";
 
-function selectResult(locationOSMName, locationOSMID) {
+function selectResult(locationOSMID, locationOSMName, locationOSMType) {
     var modalElement = document.getElementById("search_location_modal");
 
     // update price form
-    document.getElementById("id_location_osm_name").value = locationOSMName;
     document.getElementById("id_location_osm_id").value = locationOSMID;
+    // document.getElementById("id_location_osm_name").value = locationOSMName;
+    document.getElementById("id_location_osm_type").value = locationOSMType.toUpperCase();
     // add to localStorage
-    addObjectToLocalStorageItemList(RECENT_LOCATIONS_LOCALSTORAGE_ITEM_KEY, {"display_name": locationOSMName, "osm_id": locationOSMID});
+    addObjectToLocalStorageItemList(RECENT_LOCATIONS_LOCALSTORAGE_ITEM_KEY, {"osm_id": locationOSMID, "display_name": locationOSMName, "osm_type": locationOSMType});
     // close modal
     var modal = bootstrap.Modal.getInstance(modalElement);
     modal.hide();
 }
 
-function createSearchResultListElement(locationOSMName, locationOSMID) {
+function createSearchResultListElement(locationOSMID, locationOSMName, locationOSMType) {
     var li = document.createElement("li");
     li.id = locationOSMID;
     li.title = locationOSMName;
     li.style.cursor = "pointer";
-    li.innerHTML = `📍 ${locationOSMName}`;
+    li.innerHTML = `📍 ${locationOSMName} [${locationOSMType}]`;
     li.addEventListener("click", function (event) {
-        selectResult(locationOSMName, locationOSMID);
+        selectResult(locationOSMID, locationOSMName, locationOSMType);
     });
     return li;
 }
@@ -66,7 +67,7 @@ function populateRecentLocations() {
 
         var ul = document.createElement("ul");
         for (var i = 0; i < recentLocations.length; ++i) {
-            var li = createSearchResultListElement(recentLocations[i].display_name, recentLocations[i].osm_id);
+            var li = createSearchResultListElement(recentLocations[i].osm_id, recentLocations[i].display_name, recentLocations[i].osm_type);
             ul.appendChild(li);
         }
         recentLocationsElement.appendChild(ul);
@@ -106,7 +107,7 @@ async function nominatimSearch() {
         if (locations.length) {
             var ul = document.createElement("ul");
             for (var i = 0; i < locations.length; ++i) {
-                var li = createSearchResultListElement(locations[i].display_name, locations[i].osm_id);
+                var li = createSearchResultListElement(locations[i].osm_id, locations[i].display_name, locations[i].osm_type);
                 ul.appendChild(li);
             }
             searchResultsElement.appendChild(ul);
