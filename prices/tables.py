@@ -1,6 +1,6 @@
 import django_tables2 as tables
 
-from common.tables import ChoiceColumn, ImageColumn, TextEllipsisColumn
+from common.tables import ChoiceColumn
 from prices.models import Price
 
 
@@ -10,9 +10,6 @@ CATEGORY_FIELD_SEQUENCE = [field.name for field in Price._meta.fields]
 
 
 class PriceTable(tables.Table):
-    location_osm_name = TextEllipsisColumn(attrs={"td": {"title": lambda record: record.location_osm_name}})
-    product_off_image_url = ImageColumn()
-
     class Meta:
         model = Price
         fields = CATEGORY_FIELD_SEQUENCE
