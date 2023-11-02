@@ -57,7 +57,12 @@ class Price(models.Model):
 
     product_code = models.CharField(verbose_name="Product code")
     product = models.ForeignKey(
-        verbose_name="Product code", to=Product, related_name="prices", on_delete=models.CASCADE, blank=True, null=True
+        verbose_name="Product (OFF)",
+        to=Product,
+        related_name="prices",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
 
     price = models.DecimalField(verbose_name="Price", max_digits=10, decimal_places=2)
@@ -89,10 +94,11 @@ class Price(models.Model):
 @receiver(post_save, sender=Price)
 def price_post_create_fetch_info(sender, instance, created, **kwargs):
     if created:
+        # link Product with product_code
         if instance.product_code:
-            from prices.tasks import fetch_and_update_product_info_from_openfoodfacts
-
-            fetch_and_update_product_info_from_openfoodfacts(instance)
+            product, created = Product.objects.get_or_create(code=instance.product_code)
+            instance.product = product
+            instance.save()
         if instance.location_osm_id:
             from prices.tasks import fetch_and_update_location_info_from_openstreetmap
 

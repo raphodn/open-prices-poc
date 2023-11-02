@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="prices",
                 to="products.product",
-                verbose_name="Product code",
+                verbose_name="Product (OFF)",
             ),
         ),
     ]
