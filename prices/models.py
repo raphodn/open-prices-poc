@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
+from locations.models import Location
 from products.models import Product
 
 
@@ -30,17 +31,12 @@ class Price(models.Model):
         "currency",
         "location_osm_id",
         "location_osm_type",
-        "location_osm_name",
-        "location_osm_lat",
-        "location_osm_lon",
+        "location",
         "date",
         "created",
     ]
     READONLY_FIELDS = [
         "location_osm_type",
-        "location_osm_name",
-        "location_osm_lat",
-        "location_osm_lon",
         "source",
         "created",
     ]
@@ -62,12 +58,13 @@ class Price(models.Model):
     location_osm_type = models.CharField(
         verbose_name="Location type (OSM)", choices=OSM_TYPE_CHOICES, blank=True, null=True
     )
-    location_osm_name = models.CharField(verbose_name="Location name (OSM)", blank=True, null=True)
-    location_osm_lat = models.DecimalField(
-        verbose_name="Location latitude (OSM)", max_digits=11, decimal_places=7, blank=True, null=True
-    )
-    location_osm_lon = models.DecimalField(
-        verbose_name="Location longitude (OSM)", max_digits=11, decimal_places=7, blank=True, null=True
+    location = models.ForeignKey(
+        verbose_name="Location (OSM)",
+        to=Location,
+        related_name="prices",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
 
     date = models.DateField(verbose_name="Date")
@@ -89,7 +86,9 @@ def price_post_create_fetch_info(sender, instance, created, **kwargs):
             product, created = Product.objects.get_or_create(code=instance.product_code)
             instance.product = product
             instance.save()
-        if instance.location_osm_id:
-            from prices.tasks import fetch_and_update_location_info_from_openstreetmap
-
-            fetch_and_update_location_info_from_openstreetmap(instance)
+        if instance.location_osm_id and instance.location_osm_type:
+            location, created = Location.objects.get_or_create(
+                osm_id=instance.location_osm_id, osm_type=instance.location_osm_type
+            )
+            instance.location = location
+            instance.save()
