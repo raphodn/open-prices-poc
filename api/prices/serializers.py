@@ -10,3 +10,4 @@ class PriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Price
         fields = Price.SERIALIZED_FIELDS
+        read_only_fields = Price.READONLY_FIELDS

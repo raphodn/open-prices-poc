@@ -34,14 +34,30 @@ class Price(models.Model):
     CHOICE_FIELDS = ["product_off_db", "currency", "location_osm_type", "source"]
     SERIALIZED_FIELDS = [
         "product_code",
+        "product_off_name",
+        "product_off_image_url",
         "price",
         "currency",
         "location_osm_id",
+        "location_osm_type",
         "location_osm_name",
+        "location_osm_lat",
+        "location_osm_lon",
         "date",
         "created",
     ]
-    READONLY_FIELDS = ["source", "created"]
+    READONLY_FIELDS = [
+        "product_in_off",
+        "product_off_db",
+        "product_off_name",
+        "product_off_image_url",
+        "location_osm_type",
+        "location_osm_name",
+        "location_osm_lat",
+        "location_osm_lon",
+        "source",
+        "created",
+    ]
 
     product_code = models.CharField(verbose_name="Product code")
     product_in_off = models.BooleanField(verbose_name="Product in OFF?", blank=True, null=True)
