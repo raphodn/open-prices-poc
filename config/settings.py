@@ -21,7 +21,6 @@ SECRET_KEY = env("SECRET_KEY")
 if os.getenv("DEBUG") == "True":
     DEBUG = True
 else:
-    print("in")
     DEBUG = False
 
 ALLOWED_HOSTS = [

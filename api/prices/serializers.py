@@ -4,7 +4,7 @@ from prices.models import Price
 
 
 class PriceSerializer(serializers.ModelSerializer):
-    location_name = serializers.CharField(read_only=True)
+    location_osm_name = serializers.CharField(read_only=True)
     created = serializers.DateTimeField(read_only=True)
 
     class Meta:
