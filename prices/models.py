@@ -36,6 +36,7 @@ class Price(models.Model):
     CHOICE_FIELDS = ["currency", "location_osm_type", "source"]
     SERIALIZED_FIELDS = [
         "product_code",
+        "product",
         "price",
         "currency",
         "location_osm_id",
