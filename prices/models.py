@@ -3,6 +3,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
+from products.models import Product
+
 
 class Price(models.Model):
     CURRENCY_EURO = "€"
@@ -31,11 +33,9 @@ class Price(models.Model):
         (OSM_TYPE_RELATION, "Relation"),
     ]
 
-    CHOICE_FIELDS = ["product_off_db", "currency", "location_osm_type", "source"]
+    CHOICE_FIELDS = ["currency", "location_osm_type", "source"]
     SERIALIZED_FIELDS = [
         "product_code",
-        "product_off_name",
-        "product_off_image_url",
         "price",
         "currency",
         "location_osm_id",
@@ -47,10 +47,6 @@ class Price(models.Model):
         "created",
     ]
     READONLY_FIELDS = [
-        "product_in_off",
-        "product_off_db",
-        "product_off_name",
-        "product_off_image_url",
         "location_osm_type",
         "location_osm_name",
         "location_osm_lat",
@@ -60,10 +56,9 @@ class Price(models.Model):
     ]
 
     product_code = models.CharField(verbose_name="Product code")
-    product_in_off = models.BooleanField(verbose_name="Product in OFF?", blank=True, null=True)
-    product_off_db = models.CharField(verbose_name="Product OFF DB", choices=OFF_SOURCE_CHOICES, blank=True, null=True)
-    product_off_name = models.CharField(verbose_name="Product name (OFF)", blank=True, null=True)
-    product_off_image_url = models.URLField(verbose_name="Product image URL (OFF)", blank=True, null=True)
+    product = models.ForeignKey(
+        verbose_name="Product code", to=Product, related_name="prices", on_delete=models.CASCADE, blank=True, null=True
+    )
 
     price = models.DecimalField(verbose_name="Price", max_digits=10, decimal_places=2)
     currency = models.CharField(verbose_name="Currency", choices=CURRENCY_CHOICES, default=CURRENCY_EURO)
