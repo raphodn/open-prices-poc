@@ -6,7 +6,6 @@ from prices.models import Price
 
 
 PRICE_CHOICE_FIELD_MAPPING = {
-    "product_off_db": Price.OFF_SOURCE_CHOICES,
     "currency": Price.CURRENCY_CHOICES,
     "location_osm_type": Price.OSM_TYPE_CHOICES,
     "source": Price.SOURCE_CHOICES,
