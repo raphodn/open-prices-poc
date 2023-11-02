@@ -3,12 +3,14 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 from rest_framework import routers
 
 from api.prices.views import PriceViewSet
+from api.products.views import ProductViewSet
 
 
 app_name = "api"
 
 router = routers.DefaultRouter()
 router.register(r"prices", PriceViewSet, basename="prices")
+router.register(r"products", ProductViewSet, basename="products")
 
 urlpatterns = [
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
