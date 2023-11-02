@@ -1,6 +1,6 @@
 import django_tables2 as tables
 
-from common.tables import ImageColumn, TextEllipsisColumn
+from common.tables import ChoiceColumn, ImageColumn, TextEllipsisColumn
 from prices.models import Price
 
 
@@ -10,8 +10,8 @@ CATEGORY_FIELD_SEQUENCE = [field.name for field in Price._meta.fields]
 
 
 class PriceTable(tables.Table):
-    product_off_image_url = ImageColumn()
     location_osm_name = TextEllipsisColumn(attrs={"td": {"title": lambda record: record.location_osm_name}})
+    product_off_image_url = ImageColumn()
 
     class Meta:
         model = Price
@@ -19,3 +19,8 @@ class PriceTable(tables.Table):
         sequence = CATEGORY_FIELD_SEQUENCE
         template_name = TABLE_DEFAULT_TEMPLATE
         attrs = TABLE_DEFAULT_ATTRS
+
+    def __init__(self, *args, **kwargs):
+        for field_name in Price.CHOICE_FIELDS:
+            self.base_columns[field_name] = ChoiceColumn()
+        super().__init__(*args, **kwargs)

@@ -2,6 +2,14 @@ import re
 from datetime import datetime
 
 
+def get_choice_key(choices, value):
+    choices = dict(choices)
+    for key in choices:
+        if choices[key] == value:
+            return key
+    return None
+
+
 def format_elefan_product_for_supabase(elefan_product_json):
     return {
         "product_name": elefan_product_json["designation"],
