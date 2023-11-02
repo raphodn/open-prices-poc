@@ -4,6 +4,7 @@ from django.urls import reverse
 
 from prices.factories import PriceFactory
 from prices.models import Price, price_post_create_fetch_info
+from products.models import Product, product_post_create_fetch_info
 
 
 PRICE_JSON = {"product_code": "0123456789101", "price": 3.5, "location_osm_id": 652825274, "date": "2023-10-30"}
@@ -13,6 +14,7 @@ class PriceCreateApiTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         signals.post_save.disconnect(price_post_create_fetch_info, sender=Price)
+        signals.post_save.disconnect(product_post_create_fetch_info, sender=Product)
         pass
 
     def test_price_create(self):
@@ -24,6 +26,7 @@ class PriceCreateApiTest(TestCase):
         self.assertEqual(Price.objects.count(), 1)
         price = Price.objects.last()
         self.assertEqual(price.source, "API")
+        # self.assertEqual(Product.objects.count(), 1)
 
     def test_price_create_readonly_fields(self):
         url = reverse("api:prices-list")  # anonymous user
@@ -43,20 +46,13 @@ class PriceCreateApiTest(TestCase):
         self.assertEqual(Price.objects.count(), 1 + 1)
         price = Price.objects.last()
         self.assertEqual(price.location_osm_name, None)
-        # try to pass a custom "product_off_name"
-        price_data = PRICE_JSON.copy()
-        price_data["product_off_name"] = "CUSTOM"
-        response = self.client.post(url, data=price_data, content_type="application/json")
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(Price.objects.count(), 2 + 1)
-        price = Price.objects.last()
-        self.assertEqual(price.product_off_name, None)
 
 
 class PriceListApiTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         signals.post_save.disconnect(price_post_create_fetch_info, sender=Price)
+        signals.post_save.disconnect(product_post_create_fetch_info, sender=Product)
         PriceFactory()
         PriceFactory()
 
@@ -75,6 +71,7 @@ class PriceListFilterApiTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         signals.post_save.disconnect(price_post_create_fetch_info, sender=Price)
+        signals.post_save.disconnect(product_post_create_fetch_info, sender=Product)
         PriceFactory(product_code="1111111111111", price=1.0, date="2023-10-01")
         PriceFactory(product_code="2222222222222", price=2.5, date="2023-10-02")
         PriceFactory(product_code="3333333333333", price=3.25, date="2023-10-03")

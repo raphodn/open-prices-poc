@@ -50,7 +50,7 @@ THIRD_PARTY_APPS = [
     "django_filters",  # django-filter
 ]
 
-LOCAL_APPS = ["common", "api", "prices", "www"]
+LOCAL_APPS = ["common", "api", "prices", "products", "www"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
